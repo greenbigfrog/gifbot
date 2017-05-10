@@ -6,7 +6,7 @@ require "json"
 
 require "discordcr"
 
-client = Discord::Client.new(token: ENV["TOKEN"], client_id: ENV["APPID"].to_u64)
+client = Discord::Client.new(token: ENV["TOKEN"], client_id: ENV["CLIENT_ID"].to_u64)
 
 
 def get(link : String)
