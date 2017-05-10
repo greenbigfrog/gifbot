@@ -8,10 +8,12 @@ require "ctx"
 
 client = Ctx::Bot.new(token: ENV["TOKEN"], client_id: ENV["CLIENT_ID"].to_u64)
 
+# Obtains a gif from Giphy's API.
+def gif(tag : String, key : String = ENV["GIPHY_API_KEY"])
+  url = "https://api.giphy.com/v1/gifs/random?api_key=#{key}&tag=#{tag}"
 
-def get(link : String)
-  res = HTTP::Client.get link
-  JSON.parse(res.body)
+  response = HTTP::Client.get url
+  JSON.parse(response.body)["data"]["image_original_url"].as_s
 end
 
 gif_ctx = Ctx::Context.message_create do |message|
