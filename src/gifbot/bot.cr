@@ -16,38 +16,29 @@ def gif(tag : String, key : String = ENV["GIPHY_API_KEY"])
   JSON.parse(response.body)["data"]["image_original_url"].as_s
 end
 
+# Macro for replying to an event.
+macro reply(content, embed)
+  client.create_message(payload.channel_id, {{content}}, {{embed}})
+end
+
 gif_ctx = Ctx::Context.message_create do |message|
   /^.gif|<@!?#{ENV["CLIENT_ID"]}>/.match(message.content).nil?
 end
 
-PREFIX = "."
-USER = "<@249907655261290497> "
-NICK = "<@!249907655261290497 "
+client.message_create(gif_ctx) do |payload|
+  embed = Discord::Embed.new(
+    image: Discord::EmbedImage.new(url: gif(payload.content))
+  )
 
-client.on_message_create do |message|
-  content = message.content
-  if content.starts_with?(PREFIX)
-    content = content[1..-1]
-  elsif content.starts_with?(USER)
-    content = content[USER.size..-1]
-  elsif content.starts_with?(NICK)
-    content = content[NICK.size..-1]
-  else
-    next
-  end
-  
-  case content
-  when .starts_with?("gif")
-    msg = content.split
-    tag = msg[1..-1].join("+")
-    response = get "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=#{tag}"
+  reply nil, embed
+end
 
-    client.create_message(message.channel_id, "#{response["data"]["image_original_url"]}")
-  when "help"
-    client.create_message(message.channel_id, "responds with a random gif on `.gif [topic]`")
-  when "invite"
-    client.create_message(message.channel_id, "https://discordapp.com/oauth2/authorize?&client_id=249907655261290497&scope=bot")
-  end
+client.command(".help") do |payload|
+  reply "`.gif [topic]`", nil
+end
+
+client.command(".invite") do |payload|
+  reply "https://discordapp.com/oauth2/authorize?&client_id=#{ENV["CLIENT_ID"]}&scope=bot", nil
 end
 
 client.run
