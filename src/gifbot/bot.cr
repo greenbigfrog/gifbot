@@ -14,6 +14,10 @@ def get(link : String)
   JSON.parse(res.body)
 end
 
+gif_ctx = Ctx::Context.message_create do |message|
+  /^.gif|<@!?#{ENV["CLIENT_ID"]}>/.match(message.content).nil?
+end
+
 PREFIX = "."
 USER = "<@249907655261290497> "
 NICK = "<@!249907655261290497 "
