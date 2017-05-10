@@ -1,10 +1,7 @@
-require "dotenv"
-Dotenv.load(".env")
-
-require "http/client"
-require "json"
-
 require "ctx"
+require "dotenv"
+
+Dotenv.load(".env")
 
 client = Ctx::Bot.new(token: ENV["TOKEN"], client_id: ENV["CLIENT_ID"].to_u64)
 
