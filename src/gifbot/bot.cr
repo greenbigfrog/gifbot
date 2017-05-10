@@ -4,9 +4,9 @@ Dotenv.load(".env")
 require "http/client"
 require "json"
 
-require "discordcr"
+require "ctx"
 
-client = Discord::Client.new(token: ENV["TOKEN"], client_id: ENV["CLIENT_ID"].to_u64)
+client = Ctx::Bot.new(token: ENV["TOKEN"], client_id: ENV["CLIENT_ID"].to_u64)
 
 
 def get(link : String)
