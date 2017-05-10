@@ -6,6 +6,10 @@ authors:
 
 license: MIT
 
+targets:
+  gifbot:
+    main: src/gifbot.cr
+
 dependencies:
   ctx:
     github: z64/ctx
