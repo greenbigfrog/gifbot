@@ -27,7 +27,7 @@ client.message_create(gif_ctx) do |payload|
     image: Discord::EmbedImage.new(url: gif(payload.content))
   )
 
-  reply nil, embed
+  reply "", embed
 end
 
 client.command(".help") do |payload|
