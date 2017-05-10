@@ -7,8 +7,8 @@ authors:
 license: MIT
 
 dependencies:
-  discordcr:
-    github: meew0/discordcr
+  ctx:
+    github: z64/ctx
     branch: master
   dotenv:
     github: gdotdesign/cr-dotenv
