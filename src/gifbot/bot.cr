@@ -23,9 +23,9 @@ gif_ctx = Ctx::Context.message_create do |message|
 end
 
 client.message_create(gif_ctx) do |payload|
-  embed = Discord::Embed.new(
-    image: Discord::EmbedImage.new(url: gif(payload.content))
-  )
+  tag = payload.content.split(' ')[1..-1].join
+  url = gif tag
+  embed = Discord::Embed.new(image: Discord::EmbedImage.new(url: url))
 
   reply "", embed
 end
